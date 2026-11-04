@@ -1,195 +1,152 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080d1b">
-  <title>PRONTO AI — Il tuo assistente intelligente</title>
+  <meta name="theme-color" content="#080817">
+  <title>PRONTO AI — La soluzione prende forma</title>
   <style>
+    :root {
+      --bg: #080817;
+      --panel: rgba(18, 20, 48, .72);
+      --cyan: #42f5ff;
+      --violet: #a56bff;
+      --pink: #ff4fd8;
+      --text: #f5f5ff;
+      --muted: #a9accb;
+    }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      color: #eef5ff;
+      margin: 0; min-height: 100vh; color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
       background:
-        radial-gradient(ellipse at 50% 0%, #17345b 0%, transparent 48%),
-        #080d1b;
+        radial-gradient(ellipse at 15% 15%, rgba(75, 36, 180, .28), transparent 38%),
+        radial-gradient(ellipse at 85% 25%, rgba(0, 215, 255, .17), transparent 34%),
+        radial-gradient(ellipse at 50% 100%, rgba(255, 40, 190, .12), transparent 42%),
+        var(--bg);
+      overflow-x: hidden;
     }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 6%;
-      border-bottom: 1px solid #263550;
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .22;
+      background-image: linear-gradient(rgba(120,130,255,.08) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(120,130,255,.08) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 88%);
     }
-    .logo { font-size: 25px; font-weight: 800; letter-spacing: 2px; }
-    .logo span { color: #48d8ff; }
-    .status { color: #8cefc4; font-size: 13px; }
-    main {
-      width: min(900px, 92%);
-      margin: 55px auto;
-      text-align: center;
+    .aurora { position: fixed; width: 38vw; height: 38vw; border-radius: 50%; filter: blur(85px); opacity: .15; pointer-events: none; animation: drift 13s ease-in-out infinite alternate; }
+    .aurora.one { background: var(--violet); top: 5%; left: -15%; }
+    .aurora.two { background: var(--cyan); right: -15%; bottom: 5%; animation-delay: -5s; }
+    @keyframes drift { from { transform: translate(0,0) scale(.9); } to { transform: translate(55px,-35px) scale(1.2); } }
+    .wrap { width: min(1120px, calc(100% - 36px)); margin: auto; position: relative; z-index: 1; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 25px 0; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 900; letter-spacing: .16em; font-size: 18px; }
+    .brand-mark { width: 35px; height: 35px; border-radius: 12px; display: grid; place-items: center; color: #071019; font-weight: 1000; background: linear-gradient(135deg,var(--cyan),var(--violet),var(--pink)); box-shadow: 0 0 22px #8b69ff88; }
+    .status { font-size: 11px; letter-spacing: .12em; color: #b9ffe9; border: 1px solid #42ffbf55; background: #42ffbf12; border-radius: 99px; padding: 8px 12px; }
+    .status i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #4dffbd; margin-right: 7px; box-shadow: 0 0 10px #4dffbd; }
+    .hero { text-align: center; padding: 38px 0 24px; }
+    .eyebrow { color: var(--cyan); font-size: 11px; letter-spacing: .28em; text-transform: uppercase; font-weight: 800; }
+    h1 { font-size: clamp(38px, 7vw, 76px); line-height: .98; letter-spacing: -.055em; margin: 17px 0 14px; font-weight: 950; }
+    h1 span { background: linear-gradient(90deg,var(--cyan),#b49aff 48%,var(--pink)); color: transparent; background-clip: text; -webkit-background-clip: text; filter: drop-shadow(0 0 22px #8c6cff55); }
+    .sub { color: var(--muted); font-size: clamp(15px, 2vw, 18px); margin: 0 auto; max-width: 610px; line-height: 1.6; }
+    .orb-zone { height: 260px; display: grid; place-items: center; position: relative; margin: 6px auto 10px; }
+    .orb { width: 164px; height: 164px; position: relative; border-radius: 50%; display: grid; place-items: center;
+      background: radial-gradient(circle at 35% 28%, #fff 0 2%, #8efaff 4%, #4e74ff 19%, #5422a8 48%, #0b0d2a 72%);
+      box-shadow: 0 0 28px #50edff99, 0 0 75px #7e50ff88, inset -16px -20px 38px #050617, inset 10px 10px 25px #b5ffff88;
+      animation: pulse 3.4s ease-in-out infinite;
     }
-    .orb {
-      width: 112px;
-      height: 112px;
-      margin: 0 auto 25px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #b9f5ff, #36a9ff 35%, #5636c9 72%, #10172d);
-      box-shadow: 0 0 35px #36a9ff88, 0 0 85px #5636c966;
-      animation: pulse 3s infinite ease-in-out;
-    }
-    @keyframes pulse {
-      50% { transform: scale(1.07); box-shadow: 0 0 55px #36a9ffbb, 0 0 100px #5636c988; }
-    }
-    h1 { font-size: clamp(32px, 6vw, 52px); margin: 12px 0; }
-    h1 span { color: #55d9ff; }
-    .subtitle { color: #aabbd3; line-height: 1.6; font-size: 17px; }
-    .chat {
-      margin: 35px auto 25px;
-      padding: 20px;
-      text-align: left;
-      border: 1px solid #344969;
-      border-radius: 20px;
-      background: #111b2dcc;
-      box-shadow: 0 15px 55px #0005;
-    }
-    .messages { min-height: 75px; }
-    .message {
-      padding: 13px 16px;
-      margin: 10px 0;
-      border-radius: 14px;
-      line-height: 1.5;
-      overflow-wrap: anywhere;
-    }
-    .bot { background: #1c2c47; border: 1px solid #314969; }
-    .user { background: #123c5c; margin-left: 12%; }
-    .input-row { display: flex; gap: 10px; margin-top: 16px; }
-    input {
-      flex: 1; min-width: 0; padding: 16px;
-      border: 1px solid #405574; border-radius: 12px;
-      color: white; background: #091222; font-size: 15px;
-      outline: none;
-    }
-    input:focus { border-color: #50d6ff; }
-    button {
-      border: 0; border-radius: 12px; padding: 0 22px;
-      background: linear-gradient(135deg, #25b8e9, #6555e9);
-      color: white; font-weight: bold; cursor: pointer;
-    }
-    button:hover { filter: brightness(1.15); }
-    .suggestions {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 12px; margin-top: 25px;
-    }
-    .suggestion {
-      padding: 17px; text-align: left; border-radius: 14px;
-      border: 1px solid #2c405e; background: #111b2d;
-      color: #dcecff; cursor: pointer; transition: .2s;
-    }
-    .suggestion:hover { border-color: #48d8ff; transform: translateY(-2px); }
-    .suggestion strong { display: block; margin-bottom: 6px; }
-    .suggestion small { color: #9eafc7; line-height: 1.5; }
-    footer { padding: 25px; text-align: center; color: #71839d; font-size: 12px; }
-    @media (max-width: 550px) {
-      header { padding: 17px 5%; }
-      main { margin: 38px auto; }
-      .suggestions { grid-template-columns: 1fr; }
+    .orb::before, .orb::after { content: ""; position: absolute; inset: -20px; border: 1px solid #59eaff88; border-radius: 50%; transform: rotateX(68deg) rotateZ(-24deg); animation: spin 9s linear infinite; }
+    .orb::after { inset: -34px; border-color: #e05bff88; transform: rotateX(72deg) rotateZ(48deg); animation-duration: 13s; animation-direction: reverse; }
+    .core { width: 40px; height: 40px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, white, #9ffcff 22%, #5c54ff 68%, #21114b); box-shadow: 0 0 28px #72f8ff, 0 0 60px #a45dff; }
+    .orbit { position: absolute; width: 230px; height: 230px; border: 1px dashed #7e8dff55; border-radius: 50%; animation: spin 24s linear infinite; }
+    .orbit::before { content: ""; position: absolute; width: 8px; height: 8px; border-radius: 50%; top: 23px; left: 35px; background: var(--pink); box-shadow: 0 0 15px var(--pink); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes pulse { 0%,100% { transform: scale(.96); } 50% { transform: scale(1.04); } }
+    .section-label { text-align: center; color: #d7d8f4; font-size: 13px; margin: 0 0 14px; letter-spacing: .04em; }
+    .cards { display: grid; grid-template-columns: repeat(4,1fr); gap: 13px; margin: 0 auto 22px; }
+    .tile { border: 1px solid #9c9cff35; background: linear-gradient(145deg,rgba(35,37,79,.7),rgba(12,14,35,.72)); border-radius: 17px; padding: 17px 13px; text-align: left; min-height: 112px; box-shadow: inset 0 1px 0 #ffffff0b; transition: .25s ease; }
+    .tile:hover { transform: translateY(-5px); border-color: #55efffbb; box-shadow: 0 10px 35px #5a57ff22, 0 0 20px #42f5ff18; }
+    .tile .emoji { font-size: 23px; display: block; margin-bottom: 12px; filter: drop-shadow(0 0 9px #9b83ff); }
+    .tile b { display: block; font-size: 13px; }
+    .tile small { color: var(--muted); font-size: 11px; display: block; margin-top: 5px; line-height: 1.4; }
+    .chat { max-width: 790px; margin: 0 auto 65px; border: 1px solid #7e8cff66; border-radius: 22px; padding: 17px; background: var(--panel); backdrop-filter: blur(18px); box-shadow: 0 0 50px #594bff20, inset 0 1px 0 #ffffff12; }
+    .chat-top { display: flex; align-items: center; gap: 9px; color: #c7c9e8; font-size: 12px; margin: 0 0 12px 4px; }
+    .mini-dot { width: 8px; height: 8px; background: var(--cyan); border-radius: 50%; box-shadow: 0 0 12px var(--cyan); }
+    .input-row { display: flex; gap: 10px; }
+    input { flex: 1; min-width: 0; color: white; background: #080b20; border: 1px solid #7779b955; border-radius: 13px; padding: 16px; font-size: 14px; outline: none; }
+    input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px #42f5ff18, 0 0 20px #42f5ff18; }
+    input::placeholder { color: #777b9f; }
+    button { border: 0; border-radius: 13px; padding: 0 21px; color: #080817; font-weight: 900; letter-spacing: .03em; background: linear-gradient(100deg,var(--cyan),#a6a0ff,var(--pink)); box-shadow: 0 0 22px #8c6cff55; cursor: pointer; transition: .2s; }
+    button:hover { transform: translateY(-2px); box-shadow: 0 0 30px #8c6cff99; }
+    .reply { display: none; margin: 13px 2px 0; padding: 13px 15px; border-left: 2px solid var(--cyan); border-radius: 8px; background: #42f5ff0d; color: #d8dcff; font-size: 13px; line-height: 1.5; }
+    footer { text-align: center; color: #737796; font-size: 11px; padding: 0 0 25px; letter-spacing: .06em; }
+    @media (max-width: 650px) {
+      .wrap { width: min(100% - 26px, 520px); }
+      header { padding: 18px 0; }
+      .brand { font-size: 15px; }
+      .hero { padding-top: 30px; }
+      .orb-zone { height: 225px; }
+      .orb { width: 138px; height: 138px; }
+      .orbit { width: 196px; height: 196px; }
+      .cards { grid-template-columns: repeat(2,1fr); gap: 10px; }
+      .tile { min-height: 100px; }
+      .chat { padding: 12px; margin-bottom: 45px; }
       .input-row { flex-direction: column; }
-      button { min-height: 48px; }
-      .chat { padding: 14px; }
+      input, button { min-height: 49px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">PRONTO<span> AI</span></div>
-    <div class="status">● Assistente pronto</div>
-  </header>
+  <div class="aurora one"></div><div class="aurora two"></div>
+  <main class="wrap">
+    <header>
+      <div class="brand"><div class="brand-mark">P</div> PRONTO AI</div>
+      <div class="status"><i></i> ASSISTENTE ONLINE</div>
+    </header>
 
-  <main>
-    <div class="orb"></div>
-    <h1>Il tuo problema.<br><span>La nostra soluzione.</span></h1>
-    <p class="subtitle">
-      Raccontaci cosa devi fare. PRONTO AI ti aiuterà a capire
-      il problema e a preparare un piano d'azione.
-    </p>
-
-    <section class="chat">
-      <div class="messages" id="messages" aria-live="polite">
-        <div class="message bot">
-          Ciao! Sono PRONTO AI. 👋<br>
-          Come posso aiutarti oggi? Raccontami cosa vuoi risolvere.
-        </div>
+    <section class="hero">
+      <div class="eyebrow">La tua intelligenza operativa</div>
+      <h1>Il tuo problema.<br><span>La nostra soluzione.</span></h1>
+      <p class="sub">Raccontaci cosa ti serve. L'intelligenza artificiale ti aiuta a fare chiarezza e a trasformare le idee in un piano d'azione.</p>
+      <div class="orb-zone" aria-label="Sfera luminosa animata">
+        <div class="orbit"></div><div class="orb"><div class="core"></div></div>
       </div>
-      <form class="input-row" id="chatForm">
-        <input id="userInput" type="text"
-          placeholder="Scrivi qui il tuo problema..."
-          aria-label="Descrivi il tuo problema" required>
-        <button type="submit">Invia ➜</button>
-      </form>
     </section>
 
-    <h3>Da dove vuoi iniziare?</h3>
-    <div class="suggestions">
-      <button class="suggestion" type="button" data-prompt="Vorrei capire perché la mia bolletta è aumentata.">
-        <strong>💡 Risparmiare</strong>
-        <small>Bollette, spese e preventivi</small>
-      </button>
-      <button class="suggestion" type="button" data-prompt="Ho un problema con un prodotto e vorrei fare un reclamo.">
-        <strong>🛡️ Reclami e garanzie</strong>
-        <small>Resi, rimborsi e diritti</small>
-      </button>
-      <button class="suggestion" type="button" data-prompt="Vorrei capire un documento che non riesco a comprendere.">
-        <strong>📄 Capire documenti</strong>
-        <small>Lettere, contratti e bollette</small>
-      </button>
-      <button class="suggestion" type="button" data-prompt="Ho bisogno di scrivere un'email formale.">
-        <strong>✉️ Scrivere e comunicare</strong>
-        <small>Email e lettere personalizzate</small>
-      </button>
-    </div>
+    <p class="section-label">Da dove vuoi iniziare?</p>
+    <section class="cards">
+      <div class="tile"><span class="emoji">✦</span><b>Risparmiare</b><small>Trova opportunità e soluzioni</small></div>
+      <div class="tile"><span class="emoji">⚡</span><b>Fare un reclamo</b><small>Prepara una richiesta chiara</small></div>
+      <div class="tile"><span class="emoji">◈</span><b>Capire un documento</b><small>Spiegazioni semplici, passo passo</small></div>
+      <div class="tile"><span class="emoji">✉</span><b>Scrivere meglio</b><small>Email, lettere e comunicazioni</small></div>
+    </section>
+
+    <section class="chat">
+      <div class="chat-top"><span class="mini-dot"></span> PRONTO AI · modalità demo</div>
+      <form id="chatForm" class="input-row">
+        <input id="userInput" type="text" placeholder="Raccontami: di cosa hai bisogno?" aria-label="Scrivi il tuo problema">
+        <button type="submit">INIZIA ↗</button>
+      </form>
+      <div id="reply" class="reply" role="status"></div>
+    </section>
+    <footer>PRONTO AI · La soluzione prende forma</footer>
   </main>
-
-  <footer>
-    PRONTO AI © 2026 — Il tuo assistente personale intelligente
-  </footer>
-
   <script>
-    const form = document.getElementById("chatForm");
-    const input = document.getElementById("userInput");
-    const messages = document.getElementById("messages");
-
-    function sendMessage(text) {
-      const cleanText = text.trim();
-      if (!cleanText) return;
-
-      const userMessage = document.createElement("div");
-      userMessage.className = "message user";
-      userMessage.textContent = cleanText;
-      messages.appendChild(userMessage);
-
-      const reply = document.createElement("div");
-      reply.className = "message bot";
-      reply.textContent =
-        "Ho ricevuto la tua richiesta! Questa è la prima versione dimostrativa di PRONTO AI. Nel prossimo sviluppo collegheremo l'intelligenza artificiale reale, che analizzerà il problema e preparerà un piano d'azione personalizzato.";
-      messages.appendChild(reply);
-
-      input.value = "";
-      messages.scrollIntoView({ behavior: "smooth", block: "end" });
-    }
-
-    form.addEventListener("submit", function(event) {
+    const form = document.getElementById('chatForm');
+    const input = document.getElementById('userInput');
+    const reply = document.getElementById('reply');
+    form.addEventListener('submit', function (event) {
       event.preventDefault();
-      sendMessage(input.value);
-    });
-
-    document.querySelectorAll(".suggestion").forEach(button => {
-      button.addEventListener("click", function() {
-        sendMessage(this.dataset.prompt);
-      });
+      const message = input.value.trim();
+      if (!message) {
+        reply.textContent = 'Scrivi brevemente di cosa hai bisogno: iniziamo da lì.';
+      } else {
+        reply.textContent = 'Ho ricevuto la tua richiesta: "' + message + '". Questa è ancora una demo: il collegamento all’intelligenza artificiale verrà aggiunto in una fase successiva.';
+      }
+      reply.style.display = 'block';
     });
   </script>
 </body>
